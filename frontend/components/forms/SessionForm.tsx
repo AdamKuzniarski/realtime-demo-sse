@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "../ui/input";
+import { createSession } from "@/lib/actions";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -34,14 +35,9 @@ export function SessionForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    fetch("http://localhost:3000/session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    await createSession(values.title, values.description);
+    form.reset();
   }
 
   return (

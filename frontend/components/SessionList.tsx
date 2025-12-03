@@ -1,5 +1,3 @@
-"use client";
-
 import {
   Card,
   CardDescription,
@@ -7,20 +5,10 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
-import useSWR from "swr";
+import { getSessions } from "@/lib/data";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-export default function SessionList() {
-  const {
-    data: sessions,
-    error,
-    isLoading,
-  } = useSWR("http://localhost:3000/session", fetcher);
-
-  if (error) return <div className="text-red-500">Failed to load sessions</div>;
-  if (isLoading) return <div className="text-gray-500">Loading...</div>;
-
+export default async function SessionList() {
+  const sessions = await getSessions();
   return (
     <div className="space-y-3">
       {sessions?.map((session: any) => (
