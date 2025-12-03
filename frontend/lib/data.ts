@@ -21,7 +21,7 @@ export async function getSessions(): Promise<Session[]> {
 
     return res.json();
   } catch (error) {
-    console.error("Error fetching todos:", error);
+    console.error("Error fetching sessions:", error);
     return []; // Gib im Fehlerfall eine leere Liste zurück
   }
 }

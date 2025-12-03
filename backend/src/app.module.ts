@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SessionModule } from './session/session.module';
+import { QuestionsModule } from './questions/questions.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { SessionModule } from './session/session.module';
       logging: false,
     }),
     SessionModule,
+    QuestionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
