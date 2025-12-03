@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000/session";
+const API_URL = process.env.FETCH_URL || "http://localhost:3000/session";
 
 export interface Session {
   id: string;
