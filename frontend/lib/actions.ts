@@ -33,7 +33,7 @@ export async function createSession(
     // und die neuen Daten abgerufen werden.
     revalidatePath("/");
   } catch (error) {
-    console.error("Error creating todo:", error);
+    console.error("Error creating Session:", error);
     // Hier könnten Sie Fehlerbehandlung hinzufügen
   }
 }
