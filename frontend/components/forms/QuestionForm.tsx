@@ -15,63 +15,65 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "../ui/input";
+import { createQuestion } from "@/lib/actions";
 
 const formSchema = z.object({
-  title: z.string().min(2, {
-    message: "Title must be at least 2 characters.",
+  author: z.string().min(2, {
+    message: "Author must be at least 2 characters.",
   }),
-  description: z.string().min(5, {
-    message: "Description must be at least 5 characters.",
+  content: z.string().min(5, {
+    message: "Content must be at least 5 characters.",
   }),
 });
 
-export function QuestionForm() {
+interface QuestionFormProps {
+  sessionId: string;
+}
+
+export function QuestionForm({ sessionId }: QuestionFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      description: "",
+      author: "",
+      content: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    fetch("http://localhost:3000/session", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    await createQuestion(values.author, values.content, sessionId);
+    form.reset();
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pt-5">
         <FormField
           control={form.control}
-          name="title"
+          name="author"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Author</FormLabel>
               <FormControl>
-                <Input placeholder="Session title" {...field} />
+                <Input placeholder="Author" {...field} />
               </FormControl>
-              <FormDescription>Enter a title for your session.</FormDescription>
+              <FormDescription>
+                Enter a author for your question.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
         <FormField
           control={form.control}
-          name="description"
+          name="content"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Description</FormLabel>
+              <FormLabel>Content</FormLabel>
               <FormControl>
-                <Input placeholder="Session description" {...field} />
+                <Input placeholder="Content" {...field} />
               </FormControl>
               <FormDescription>
-                Enter a description for your session.
+                Enter a content for your question.
               </FormDescription>
               <FormMessage />
             </FormItem>

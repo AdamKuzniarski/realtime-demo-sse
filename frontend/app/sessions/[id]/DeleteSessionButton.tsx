@@ -22,7 +22,7 @@ export default function DeleteSessionButton({ id }: Props) {
     <button
       type="button"
       onClick={onDelete}
-      className="mt-5 inline-flex items-center rounded-full bg-red-500 px-4 py-2 text-sm font-medium text-white shadow hover:bg-red-600 transition"
+      className="my-5 inline-flex items-center rounded-full bg-red-500 px-4 py-2 text-sm font-medium text-white shadow hover:bg-red-600 transition"
     >
       <Trash className="h-4 w-4 mr-2" />
       Delete
