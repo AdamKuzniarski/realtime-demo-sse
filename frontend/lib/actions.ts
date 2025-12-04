@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 
-const API_URL = "http://localhost:3000/session";
+const API_URL_SESSION = "http://localhost:3000/session";
+const API_URL_QUESTION = "http://localhost:3000/questions";
 
 /**
  * Erstellt ein neues ToDo auf dem JSON Server.
@@ -19,7 +20,7 @@ export async function createSession(
   };
 
   try {
-    await fetch(API_URL, {
+    await fetch(API_URL_SESSION, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -35,5 +36,31 @@ export async function createSession(
   } catch (error) {
     console.error("Error creating Session:", error);
     // Hier könnten Sie Fehlerbehandlung hinzufügen
+  }
+}
+
+export async function createQuestion(
+  author: string,
+  content: string,
+  sessionId: string
+): Promise<void> {
+  const newQuestion = {
+    author,
+    content,
+    sessionId,
+  };
+
+  try {
+    await fetch(API_URL_QUESTION, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newQuestion),
+    });
+
+    revalidatePath(`/sessions/${sessionId}`);
+  } catch (error) {
+    console.error("Error creating Question:", error);
   }
 }

@@ -1,6 +1,8 @@
 import { Form } from "@/components/ui/form";
 import Link from "next/link";
 import DeleteSessionButton from "./DeleteSessionButton";
+import { QuestionForm } from "@/components/forms/QuestionForm";
+import QuestionList from "./QuestionList";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -60,7 +62,9 @@ export default async function SessionDetailPage({ params }: Props) {
           <p className="text-lg text-gray-600 leading-relaxed">
             {session.description}
           </p>
-        <DeleteSessionButton id={id}/>
+          <DeleteSessionButton id={id} />
+          <QuestionForm sessionId={id} />
+          <QuestionList sessionId={id} />
         </article>
       </div>
     </div>

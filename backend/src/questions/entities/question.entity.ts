@@ -8,8 +8,6 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
-export type sessionId = Session['id'];
-
 @Entity()
 export class Question {
   @PrimaryGeneratedColumn('uuid')
