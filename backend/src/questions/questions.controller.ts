@@ -7,10 +7,13 @@ import {
   Delete,
   Put,
   Patch,
+  Sse,
 } from '@nestjs/common';
 import { QuestionsService } from './questions.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
+import { Observable, interval } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 @Controller('questions')
 export class QuestionsController {
@@ -46,5 +49,19 @@ export class QuestionsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.questionsService.remove(id);
+  }
+
+  @Sse('stream/:sessionId')
+  sse(@Param('sessionId') sessionId: string): Observable<MessageEvent> {
+    return interval(1000).pipe(
+      switchMap(
+        async () =>
+          ({
+            data: {
+              questions: await this.questionsService.getStream(sessionId),
+            },
+          }) as MessageEvent,
+      ),
+    );
   }
 }
