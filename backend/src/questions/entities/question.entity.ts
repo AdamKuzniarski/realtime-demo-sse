@@ -22,6 +22,9 @@ export class Question {
   @Column()
   sessionId: string;
 
+  @Column({ default: 0 })
+  upvotes: number;
+
   @ManyToOne(() => Session, (session) => session.questions, {
     onDelete: 'CASCADE',
   })

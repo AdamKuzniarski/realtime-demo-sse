@@ -64,3 +64,15 @@ export async function createQuestion(
     console.error("Error creating Question:", error);
   }
 }
+
+export async function upvoteQuestion(questionId: string) {
+  const res = await fetch(`${API_URL_QUESTION}/${questionId}/upvote`, {
+    method: "PATCH",
+  });
+
+  if (!res.ok) {
+    throw new Error("Failed to upvote question");
+  }
+
+  return res.json();
+}

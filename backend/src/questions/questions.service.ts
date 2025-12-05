@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateQuestionDto } from './dto/create-question.dto';
 import { UpdateQuestionDto } from './dto/update-question.dto';
 import { Question } from './entities/question.entity';
@@ -30,6 +30,17 @@ export class QuestionsService {
   async update(id: string, updateQuestionDto: UpdateQuestionDto) {
     await this.questionRepository.update(id, updateQuestionDto);
     return await this.questionRepository.findOneBy({ id });
+  }
+
+  async upvote(id: string): Promise<Question> {
+    const question = await this.questionRepository.findOne({ where: { id } });
+
+    if (!question) {
+      throw new NotFoundException(`Question with ID ${id} not found`);
+    }
+
+    question.upvotes += 1;
+    return this.questionRepository.save(question);
   }
 
   async remove(id: string) {

@@ -35,9 +35,8 @@ export interface Question {
   author: string;
   content: string;
   sessionId: string;
+  upvotes: number;
 }
-
-
 
 export async function getQuestionsBySession(
   sessionId: string

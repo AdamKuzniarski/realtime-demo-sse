@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import { getQuestionsBySession, Question } from "@/lib/data";
+import UpvoteButton from "@/components/UpvoteBtn";
 
 interface QuestionListProps {
   sessionId: string;
@@ -24,11 +25,14 @@ export default async function QuestionList({ sessionId }: QuestionListProps) {
           <Link key={question.id} href={`/sessions/${question.sessionId}`}>
             <Card className="my-5 hover:bg-gray-50  transition-colors cursor-pointer">
               <CardHeader>
-
                 <CardTitle className="text-lg">{question.author}</CardTitle>
                 <CardDescription>{question.content}</CardDescription>
-                
               </CardHeader>
+              <UpvoteButton 
+                sessionId={question.sessionId}
+                questionId={question.id}
+                initialUpvotes={question.upvotes}
+              />
             </Card>
           </Link>
         ))
