@@ -22,19 +22,19 @@ export default async function QuestionList({ sessionId }: QuestionListProps) {
         <p className="text-gray-500">No questions yet.</p>
       ) : (
         questions?.map((question: Question) => (
-          <Link key={question.id} href={`/sessions/${question.sessionId}`}>
+          <div key={question.id}>
             <Card className="my-5 hover:bg-gray-50  transition-colors cursor-pointer">
               <CardHeader>
                 <CardTitle className="text-lg">{question.author}</CardTitle>
                 <CardDescription>{question.content}</CardDescription>
               </CardHeader>
-              <UpvoteButton 
+              <UpvoteButton
                 sessionId={question.sessionId}
                 questionId={question.id}
                 initialUpvotes={question.upvotes}
               />
             </Card>
-          </Link>
+          </div>
         ))
       )}
     </div>

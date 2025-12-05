@@ -4,6 +4,7 @@ import { UpdateQuestionDto } from './dto/update-question.dto';
 import { Question } from './entities/question.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class QuestionsService {
@@ -45,5 +46,15 @@ export class QuestionsService {
 
   async remove(id: string) {
     return await this.questionRepository.delete(id);
+  }
+
+  async getStream(sessionId: string): Promise<Question[]> {
+    console.log('Streaming questions for session:', sessionId);
+    const questions = await this.questionRepository.find({
+      where: { sessionId },
+    });
+
+    console.log(questions);
+    return questions;
   }
 }
