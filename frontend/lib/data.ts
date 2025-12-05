@@ -37,22 +37,23 @@ export interface Question {
   sessionId: string;
 }
 
-export async function getQuestion(): Promise<Question[]> {
+
+
+export async function getQuestionsBySession(
+  sessionId: string
+): Promise<Question[]> {
   try {
-    const res = await fetch(API_URL_QUESTION, {
-      // cache: 'no-store',
+    const res = await fetch(`${API_URL_QUESTION}/session/${sessionId}`, {
+      cache: "no-store",
     });
 
     if (!res.ok) {
-      throw new Error("Failed to fetch questions");
+      throw new Error("Failed to fetch questions for session");
     }
-
-    // Eine kurze künstliche Verzögerung, um das Server-Side-Loading zu simulieren
-    // await new Promise(resolve => setTimeout(resolve, 1000));
 
     return res.json();
   } catch (error) {
     console.error("Error fetching questions:", error);
-    return []; // Gib im Fehlerfall eine leere Liste zurück
+    return [];
   }
 }

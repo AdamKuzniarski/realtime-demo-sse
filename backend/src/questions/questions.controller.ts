@@ -25,9 +25,9 @@ export class QuestionsController {
     return this.questionsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.questionsService.findOne(id);
+  @Get('session/:sessionId')
+  findBySession(@Param('sessionId') sessionId: string) {
+    return this.questionsService.findBySession(sessionId);
   }
 
   @Put(':id')

@@ -22,7 +22,9 @@ export class Question {
   @Column()
   sessionId: string;
 
-  @ManyToOne(() => Session, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Session, (session) => session.questions, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'sessionId' })
   session: Session;
 

@@ -16,12 +16,15 @@ export class QuestionsService {
     return await this.questionRepository.save(questionEntry);
   }
 
-  async findAll() {
+  async findAll(): Promise<Question[]> {
     return await this.questionRepository.find();
   }
 
-  async findOne(id: string) {
-    return await this.questionRepository.findOneBy({ id });
+  async findBySession(sessionId: string): Promise<Question[]> {
+    return this.questionRepository.find({
+      where: { sessionId },
+      order: { createdAt: 'ASC' },
+    });
   }
 
   async update(id: string, updateQuestionDto: UpdateQuestionDto) {
