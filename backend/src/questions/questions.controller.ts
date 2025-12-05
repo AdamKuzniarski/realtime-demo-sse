@@ -6,6 +6,7 @@ import {
   Param,
   Delete,
   Put,
+  Patch,
 } from '@nestjs/common';
 import { QuestionsService } from './questions.service';
 import { CreateQuestionDto } from './dto/create-question.dto';
@@ -30,6 +31,10 @@ export class QuestionsController {
     return this.questionsService.findBySession(sessionId);
   }
 
+  @Patch(':id/upvote')
+  upvote(@Param('id') id: string) {
+    return this.questionsService.upvote(id);
+  }
   @Put(':id')
   update(
     @Param('id') id: string,
